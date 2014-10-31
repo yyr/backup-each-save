@@ -105,14 +105,20 @@ on the system \"/user@host:\"."
 	  (funcall handler 'file-remote-p file)
 	nil))))
 
+(defun bcs-filein-backup-dir-p (bfn)
+  (let ((fp (file-name-directory (expand-file-name bfn)))
+        (bp (expand-file-name backup-each-save-mirror-location)))
+    (string-prefix-p bp fp)))
+
 ;;;###autoload
 (defun backup-each-save ()
   (let ((bfn (buffer-file-name)))
     (when (and (or backup-each-save-remote-files
-		   (not (file-remote-p bfn)))
-	       (funcall backup-each-save-filter-function bfn)
-	       (or (not backup-each-save-size-limit)
-		   (<= (buffer-size) backup-each-save-size-limit)))
+                   (not (file-remote-p bfn)))
+               (not (bcs-filein-backup-dir-p bfn))
+               (funcall backup-each-save-filter-function bfn)
+               (or (not backup-each-save-size-limit)
+                   (<= (buffer-size) backup-each-save-size-limit)))
       (copy-file bfn (backup-each-save-compute-location bfn) t t t))))
 
 (defun backup-each-save-compute-location (filename)
