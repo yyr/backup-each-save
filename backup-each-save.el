@@ -70,18 +70,32 @@
 
 ;;; Code:
 
-(defvar backup-each-save-mirror-location "~/.backups")
+(defcustom backup-each-save-mirror-location "~/.backups"
+  "Directory to store backedup files."
+  :group 'backup-each-save
+  :type 'string)
 
-(defvar backup-each-save-remote-files nil
+(defcustom backup-each-save-remote-files nil
   "Whether to backup remote files at each save.
 
-Defaults to nil.")
+Defaults to nil."
+  :group 'backup-each-save
+  :type 'boolean)
+
+(defcustom backup-each-save-remote-files nil
+  "Whether to backup remote files at each save.
+
+Defaults to nil."
+  :group 'backup-each-save
+  :type 'boolean)
 
 (defvar backup-each-save-time-format "%Y_%m_%d_%H_%M_%S"
   "Format given to `format-time-string' which is appended to the filename.")
 
-(defvar backup-each-save-filter-function 'identity
-  "Function which should return non-nil if the file should be backed up.")
+(defcustom backup-each-save-filter-function 'identity
+  "Function which should return non-nil if the file should be backed up."
+  :group 'backup-each-save
+  :type 'function)
 
 (defvar backup-each-save-size-limit 500000
   "Maximum size of a file (in bytes) that should be copied at each savepoint.
