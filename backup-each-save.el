@@ -91,7 +91,7 @@ Setting this variable to nil disables backup suppressions based
 on size.")
 
 (unless (fboundp 'file-remote-p) ;; emacs 21.4 on debian at least,
-				 ;; doesn't provide file-remote-p
+  ;; doesn't provide file-remote-p
   (defun file-remote-p (file) ;; stolen from files.el
     "Test whether FILE specifies a location on a remote system.
 Return an identification of the system if the location is indeed
@@ -102,8 +102,8 @@ For example, the filename \"/user@host:/foo\" specifies a location
 on the system \"/user@host:\"."
     (let ((handler (find-file-name-handler file 'file-remote-p)))
       (if handler
-	  (funcall handler 'file-remote-p file)
-	nil))))
+          (funcall handler 'file-remote-p file)
+        nil))))
 
 (defun bcs-filein-backup-dir-p (bfn)
   (let ((fp (file-name-directory (expand-file-name bfn)))
@@ -123,15 +123,15 @@ on the system \"/user@host:\"."
 
 (defun backup-each-save-compute-location (filename)
   (let* ((containing-dir (file-name-directory filename))
-	 (basename (file-name-nondirectory filename))
-	 (backup-container
-	  (format "%s/%s"
-		  backup-each-save-mirror-location
-		  containing-dir)))
+         (basename (file-name-nondirectory filename))
+         (backup-container
+          (format "%s/%s"
+                  backup-each-save-mirror-location
+                  containing-dir)))
     (when (not (file-exists-p backup-container))
       (make-directory backup-container t))
     (format "%s/%s-%s" backup-container basename
-	    (format-time-string backup-each-save-time-format))))
+            (format-time-string backup-each-save-time-format))))
 
 (provide 'backup-each-save)
 ;;; backup-each-save.el ends here
