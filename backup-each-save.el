@@ -89,20 +89,22 @@ Defaults to nil."
   :group 'backup-each-save
   :type 'boolean)
 
-(defvar backup-each-save-time-format "%Y_%m_%d_%H_%M_%S"
-  "Format given to `format-time-string' which is appended to the filename.")
-
 (defcustom backup-each-save-filter-function 'identity
   "Function which should return non-nil if the file should be backed up."
   :group 'backup-each-save
   :type 'function)
 
-(defvar backup-each-save-size-limit 500000
+(defcustom backup-each-save-size-limit 10000000
   "Maximum size of a file (in bytes) that should be copied at each savepoint.
 
 If a file is greater than this size, don't make a backup of it.
 Setting this variable to nil disables backup suppressions based
-on size.")
+on size."
+  :group 'backup-each-save
+  :type 'number)
+
+(defvar backup-each-save-time-format "%Y_%m_%d_%H_%M_%S"
+  "Format given to `format-time-string' which is appended to the filename.")
 
 (unless (fboundp 'file-remote-p) ;; emacs 21.4 on debian at least,
   ;; doesn't provide file-remote-p
